@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harper // Tech Boston</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050507;
+      --surface: #0d0e14;
+      --surface-hover: #13151f;
+      --border: rgba(255, 255, 255, 0.12);
+      --text-main: #f5f7fa;
+      --text-muted: #9499ad;
+
+      /* 2000s / Y2K Accent Colors */
+      --cyan: #00f0ff;
+      --magenta: #ff0099;
+      --lime: #b8ff00;
+      --blue: #3b66ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.5rem 1.5rem;
+      position: relative;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08), transparent 35%),
+        radial-gradient(circle at 85% 80%, rgba(255, 0, 153, 0.08), transparent 35%),
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lime);
+      background: rgba(184, 255, 0, 0.08);
+      border: 1px solid rgba(184, 255, 0, 0.35);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--lime);
+      box-shadow: 0 0 8px var(--lime);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(90deg, #ffffff 0%, var(--cyan) 55%, var(--magenta) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .bio {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    .bio span {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .sites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .site-card {
+      --accent: var(--cyan);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+      opacity: 0.75;
+      transition: opacity 0.2s ease;
+    }
+
+    .site-card:hover {
+      transform: translateY(-4px);
+      background: var(--surface-hover);
+      border-color: var(--accent);
+      box-shadow: 0 10px 28px -10px color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+
+    .site-card:hover::before {
+      opacity: 1;
+    }
+
+    /* 2000s Card Color Classes: cyan, magenta, lime, blue */
+    .site-card.cyan    { --accent: var(--cyan); }
+    .site-card.magenta { --accent: var(--magenta); }
+    .site-card.lime    { --accent: var(--lime); }
+    .site-card.blue    { --accent: var(--blue); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .card-arrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .site-card:hover .card-arrow {
+      color: var(--accent);
+      transform: translate(3px, -3px);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .site-card.slot {
+      border-style: dashed;
+      opacity: 0.75;
+    }
+
+    .site-card.slot:hover {
+      opacity: 1;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    footer .highlight {
+      color: var(--cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Online // Tech Boston
+      </div>
+      <h1>Harper.</h1>
+      <p class="bio">
+        Student at <span>Tech Boston</span>. Welcome to my personal web hub — a directory of my sites, class projects, and experiments.
+      </p>
+    </header>
+
+    <main>
+      <div class="section-header">
+        <span>// Directory</span>
+        <span>[ Select a Site ]</span>
+      </div>
+
+      <div class="sites-grid">
+        <!-- TO ADD A SITE LATER: Copy any <a class="site-card ..."> block below and paste it inside .sites-grid -->
+
+        <a href="#" class="site-card cyan">
+          <div>
+            <div class="card-top">
+              <span class="card-tag">01 // Featured</span>
+              <span class="card-arrow">↗</span>
+            </div>
+            <h2 class="card-title">My Main Project</h2>
+            <p class="card-desc">Replace this link and description with your first website or portfolio.</p>
+          </div>
+        </a>
+
+        <a href="#" class="site-card magenta">
+          <div>
+            <div class="card-top">
+              <span class="card-tag">02 // Tech Boston</span>
+              <span class="card-arrow">↗</span>
+            </div>
+            <h2 class="card-title">Class Work & Labs</h2>
+            <p class="card-desc">Web design assignments, coding labs, and school builds.</p>
+          </div>
+        </a>
+
+        <a href="#" class="site-card lime">
+          <div>
+            <div class="card-top">
+              <span class="card-tag">03 // Sandbox</span>
+              <span class="card-arrow">↗</span>
+            </div>
+            <h2 class="card-title">Experiments</h2>
+            <p class="card-desc">Creative coding, mini-games, and side ideas in progress.</p>
+          </div>
+        </a>
+
+        <a href="#" class="site-card blue slot">
+          <div>
+            <div class="card-top">
+              <span class="card-tag">04 // Next Slot</span>
+              <span class="card-arrow">+</span>
+            </div>
+            <h2 class="card-title">Coming Soon</h2>
+            <p class="card-desc">Ready for your next site. Edit the HTML to link it here.</p>
+          </div>
+        </a>
+
+      </div>
+    </main>
+  </div>
+
+  <div class="container">
+    <footer>
+      <span>HARPER // <span class="highlight">TECH BOSTON</span></span>
+      <span id="clock">EST // READY</span>
+    </footer>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent =
+        'BOSTON // ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html>
